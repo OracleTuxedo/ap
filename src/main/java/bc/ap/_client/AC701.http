@@ -1,0 +1,17 @@
+### salesTransactionListAjax
+POST http://localhost:8080/AC/AC0701/salesTransactionListAjax
+Content-Type: application/json
+
+{
+    "inp_mid": "mid",
+    "inp_auth_no": "auth no",
+    "inp_auth_strtDate": "auth start date",
+    "inp_auth_endDate": "auth end date",
+    "inp_pmt_strtDate": "pmt start date",
+    "inp_pmt_endDate": "pmt end date",
+    "pageNo": 0
+}
+
+### get
+GET http://localhost:8080/AC/AC0701/
+Content-Type: application/json

@@ -1,0 +1,39 @@
+### test
+GET http://localhost:8080
+Content-Type: application/json
+
+### retrievePaymentList
+GET http://localhost:8080/AC/AC06/retrievePaymentList
+Content-Type: application/json
+
+### Create
+POST http://localhost:8080/api/employee
+Content-Type: application/json
+
+{
+  "firstName": "Le",
+  "lastName": "Rucco",
+  "email": "le@gmail.com"
+}
+
+### Get All
+GET http://localhost:8080/api/employee
+Content-Type: application/json
+
+### Get By Id
+GET http://localhost:8080/api/employee/6
+Content-Type: application/json
+
+### Update 
+PUT http://localhost:8080/api/employee/6
+Content-Type: application/json
+
+{
+  "firstName": "Le Update",
+  "lastName": "Rucco Update",
+  "email": "le@gmail.com"
+}
+
+### Delete
+DELETE http://localhost:8080/api/employee/1
+Content-Type: application/json
