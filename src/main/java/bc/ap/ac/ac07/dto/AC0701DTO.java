@@ -1,24 +1,24 @@
 package bc.ap.ac.ac07.dto;
 
+import java.time.LocalDate;
+
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.extern.jackson.Jacksonized;
 
-@Builder
 // @Getter
 // @Setter
 // @ToString
 // @Jacksonized
+@Builder
 @Data
-public class AC0701DTO {
+public class AC0701Dto {
+    private int page_no;
+    private int page_size;
     private String mid;
-    private String authNo;
-    private String authStartDate;
-    private String authEndDate;
-    private String pmtStartDate;
-    private String pmtEndDate;
-    private int pageNo;
+    private String auth_no;
+    private LocalDate auth_strt_date;
+    private LocalDate auth_end_date;
+    private LocalDate pmt_strt_date;
+    private LocalDate pmt_end_date;
+
 }
