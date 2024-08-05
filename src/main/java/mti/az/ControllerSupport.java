@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mti.com.telegram.vo.TelegramHeader;
+import mti.com.telegram.vo.TelegramMessage;
 import mti.com.telegram.vo.TelegramOutputUserData;
 
 public class ControllerSupport extends LogObject {
@@ -46,6 +47,19 @@ public class ControllerSupport extends LogObject {
                 .build();
         map.put("Status", status);
         return map;
+    }
+
+    public String getTxMessage(TelegramOutputUserData userData) throws Exception {
+        if (userData == null) {
+            throw new BizException("Error occured[txResult-UserData is null]");
+        }
+
+        TelegramMessage msgVO = userData.getMessage();
+        if (msgVO == null) {
+            throw new BizException("Error occured[txResult-TelegramHeader is null]");
+        }
+
+        return msgVO.getMessage();
     }
 
     /**

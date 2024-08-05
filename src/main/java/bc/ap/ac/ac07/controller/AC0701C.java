@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import bc.ap.ac.ac07.dto.AC0701Dto;
 import bc.ap.ac.ac07.service.AC0701S;
 import bc.ap.ac.ac07.vo.SAC02F452RInVo;
+import bc.ap.ac.ac07.vo.SAC02F452ROutSubVo;
 import bc.ap.ac.ac07.vo.SAC02F452ROutVo;
 import jakarta.servlet.http.HttpServletRequest;
 import mti.az.ControllerSupport;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +37,10 @@ public class AC0701C extends ControllerSupport {
 
     @PostMapping("/salesTransactionListAjax")
     @ResponseBody
-    public AC0701Dto salesTransactionListAjax(
+    public Map<String, Object> salesTransactionListAjax(
             @RequestBody AC0701Dto entity) throws Exception {
 
+        HashMap<String, Object> ajaxResult = new HashMap<String, Object>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyMMdd");
 
         SAC02F452RInVo inVo = SAC02F452RInVo.builder()
@@ -52,9 +57,13 @@ public class AC0701C extends ControllerSupport {
         TelegramOutputUserData result = ac0701s.getListTransaction(null, inVo);
         SAC02F452ROutVo output = (SAC02F452ROutVo) result.getOutput();
         if (isTxEmptyResult(result)) {
-            // return successMsg(Has, name)
+            return successMsg(ajaxResult, getTxMessage(result));
         }
-        return entity;
+        List<SAC02F452ROutSubVo> codeList = output.getSubVo();
+        for (int i = 0; i < codeList.size(); i++) {
+            // codeList.get(i).setSale_knd_clcd(); // TODO MTIMessageSource
+        }
+        return ajaxResult;
     }
 
     @GetMapping("/")

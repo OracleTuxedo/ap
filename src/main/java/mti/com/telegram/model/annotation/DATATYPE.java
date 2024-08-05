@@ -13,9 +13,7 @@ public @interface DATATYPE {
 
     int decimal();
 
-    int sign_length()
-
-    default 0;
+    int sign_length() default 0;
 
     int point_length() default 0;
 }

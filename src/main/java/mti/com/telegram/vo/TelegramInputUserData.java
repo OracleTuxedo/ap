@@ -1,10 +1,14 @@
 package mti.com.telegram.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TelegramInputUserData {
     private String tx_code;
 
