@@ -27,10 +27,8 @@ import mti.com.webmvc.message.vo.SAZ03V799ROutVO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.stereotype.Component;
 
-@Component
-public class MTIReloadableMessageSource implements DisposableBean {
+public class MTIMessageSource implements DisposableBean {
     private final Map<Locale, CachingBizCdMap> cachedCodeBundles = new ConcurrentHashMap<>();
 
     private final Map<Locale, CachingMsgGroupMap> cachedMessageBundles = new ConcurrentHashMap<>();
@@ -43,7 +41,7 @@ public class MTIReloadableMessageSource implements DisposableBean {
 
     private static final String MSGNORMAL = "N";
 
-    private static final Logger logger = LogManager.getLogger(MTIReloadableMessageSource.class);
+    private static final Logger logger = LogManager.getLogger(MTIMessageSource.class);
 
     public String getStrLocale() {
         return this.strLocale;
@@ -334,7 +332,7 @@ public class MTIReloadableMessageSource implements DisposableBean {
         if (map == null)
             return null;
         Set<String> set = map.keySet();
-        // str = ""; // TODO broken code
+        // str = "";
         for (String str : set) {
             if (paramString.contains(str)) {
                 int i = paramString.indexOf(str);
@@ -478,7 +476,7 @@ public class MTIReloadableMessageSource implements DisposableBean {
             cachingBizCdMap = new CachingBizCdMap(locale, str2);
             CachingCodeGroupMap cachingCodeGroupMap = new CachingCodeGroupMap(str2);
             CachingCodeGroup cachingCodeGroup = new CachingCodeGroup(str3);
-            ArrayList<CachingCodeData> arrayList = new ArrayList<CachingCodeData>();
+            ArrayList<CachingCodeData> arrayList = new ArrayList();
             CachingCodeData cachingCodeData = new CachingCodeData(str1, new MessageFormat(str5, locale));
             cachingCodeData.setClss_info_val1(new MessageFormat(paramSAZ03V798ROutSubVO.getClss_info_val1(), locale));
             cachingCodeData.setClss_info_val2(new MessageFormat(paramSAZ03V798ROutSubVO.getClss_info_val2(), locale));
@@ -496,7 +494,7 @@ public class MTIReloadableMessageSource implements DisposableBean {
             if (cachingCodeGroupMap == null) {
                 cachingCodeGroupMap = new CachingCodeGroupMap(str2);
                 CachingCodeGroup cachingCodeGroup = new CachingCodeGroup(str3);
-                ArrayList<CachingCodeData> arrayList = new ArrayList<CachingCodeData>();
+                ArrayList<CachingCodeData> arrayList = new ArrayList();
                 CachingCodeData cachingCodeData = new CachingCodeData(str1, new MessageFormat(str5, locale));
                 cachingCodeData
                         .setClss_info_val1(new MessageFormat(paramSAZ03V798ROutSubVO.getClss_info_val1(), locale));
@@ -733,7 +731,7 @@ public class MTIReloadableMessageSource implements DisposableBean {
     private class CachingCodeGroup {
         String group_cd_id;
 
-        ArrayList<MTIReloadableMessageSource.CachingCodeData> list;
+        ArrayList<MTIMessageSource.CachingCodeData> list;
 
         public CachingCodeGroup(String param1String) {
             this.group_cd_id = param1String;
@@ -748,15 +746,15 @@ public class MTIReloadableMessageSource implements DisposableBean {
             this.group_cd_id = param1String;
         }
 
-        public ArrayList<MTIReloadableMessageSource.CachingCodeData> getList() {
+        public ArrayList<MTIMessageSource.CachingCodeData> getList() {
             return this.list;
         }
 
-        public void setList(ArrayList<MTIReloadableMessageSource.CachingCodeData> param1ArrayList) {
+        public void setList(ArrayList<MTIMessageSource.CachingCodeData> param1ArrayList) {
             this.list = param1ArrayList;
         }
 
-        public void insertCachingCodeData(MTIReloadableMessageSource.CachingCodeData param1CachingCodeData) {
+        public void insertCachingCodeData(MTIMessageSource.CachingCodeData param1CachingCodeData) {
             this.list.add(param1CachingCodeData);
         }
     }
@@ -764,7 +762,7 @@ public class MTIReloadableMessageSource implements DisposableBean {
     private class CachingCodeGroupMap {
         String biz_ctgo_cd;
 
-        Map<String, MTIReloadableMessageSource.CachingCodeGroup> groupMap;
+        Map<String, MTIMessageSource.CachingCodeGroup> groupMap;
 
         public CachingCodeGroupMap(String param1String) {
             this.biz_ctgo_cd = param1String;
@@ -779,26 +777,26 @@ public class MTIReloadableMessageSource implements DisposableBean {
             this.biz_ctgo_cd = param1String;
         }
 
-        public Map<String, MTIReloadableMessageSource.CachingCodeGroup> getGroupMap() {
+        public Map<String, MTIMessageSource.CachingCodeGroup> getGroupMap() {
             return this.groupMap;
         }
 
-        public void setGroupMap(Map<String, MTIReloadableMessageSource.CachingCodeGroup> param1Map) {
+        public void setGroupMap(Map<String, MTIMessageSource.CachingCodeGroup> param1Map) {
             this.groupMap = param1Map;
         }
 
-        public MTIReloadableMessageSource.CachingCodeGroup getCachingCodeGroup(String param1String) {
+        public MTIMessageSource.CachingCodeGroup getCachingCodeGroup(String param1String) {
             return this.groupMap.get(param1String);
         }
 
         public void putCachingCodeGroup(String param1String,
-                MTIReloadableMessageSource.CachingCodeGroup param1CachingCodeGroup) {
+                MTIMessageSource.CachingCodeGroup param1CachingCodeGroup) {
             this.groupMap.put(param1String, param1CachingCodeGroup);
         }
     }
 
     private class CachingBizCdMap {
-        Map<String, MTIReloadableMessageSource.CachingCodeGroupMap> bizMap = new HashMap<>();
+        Map<String, MTIMessageSource.CachingCodeGroupMap> bizMap = new HashMap<>();
 
         Locale locale;
 
@@ -814,20 +812,20 @@ public class MTIReloadableMessageSource implements DisposableBean {
             this.locale = param1Locale;
         }
 
-        public Map<String, MTIReloadableMessageSource.CachingCodeGroupMap> getBizMap() {
+        public Map<String, MTIMessageSource.CachingCodeGroupMap> getBizMap() {
             return this.bizMap;
         }
 
-        public void setBizMap(Map<String, MTIReloadableMessageSource.CachingCodeGroupMap> param1Map) {
+        public void setBizMap(Map<String, MTIMessageSource.CachingCodeGroupMap> param1Map) {
             this.bizMap = param1Map;
         }
 
         public void putCachingCodeGroupMap(String param1String,
-                MTIReloadableMessageSource.CachingCodeGroupMap param1CachingCodeGroupMap) {
+                MTIMessageSource.CachingCodeGroupMap param1CachingCodeGroupMap) {
             this.bizMap.put(param1String, param1CachingCodeGroupMap);
         }
 
-        public MTIReloadableMessageSource.CachingCodeGroupMap getCachingCodeGroupMap(String param1String) {
+        public MTIMessageSource.CachingCodeGroupMap getCachingCodeGroupMap(String param1String) {
             return this.bizMap.get(param1String);
         }
     }
@@ -867,7 +865,7 @@ public class MTIReloadableMessageSource implements DisposableBean {
     private class CachingMsgGroup {
         String msg_clcd;
 
-        ArrayList<MTIReloadableMessageSource.CachingMsg> list;
+        ArrayList<MTIMessageSource.CachingMsg> list;
 
         public CachingMsgGroup(String param1String) {
             this.msg_clcd = param1String;
@@ -882,21 +880,21 @@ public class MTIReloadableMessageSource implements DisposableBean {
             this.msg_clcd = param1String;
         }
 
-        public ArrayList<MTIReloadableMessageSource.CachingMsg> getList() {
+        public ArrayList<MTIMessageSource.CachingMsg> getList() {
             return this.list;
         }
 
-        public void setList(ArrayList<MTIReloadableMessageSource.CachingMsg> param1ArrayList) {
+        public void setList(ArrayList<MTIMessageSource.CachingMsg> param1ArrayList) {
             this.list = param1ArrayList;
         }
 
-        public void insertCachingMsg(MTIReloadableMessageSource.CachingMsg param1CachingMsg) {
+        public void insertCachingMsg(MTIMessageSource.CachingMsg param1CachingMsg) {
             this.list.add(param1CachingMsg);
         }
     }
 
     private class CachingMsgGroupMap {
-        Map<String, MTIReloadableMessageSource.CachingMsgGroup> grpMap;
+        Map<String, MTIMessageSource.CachingMsgGroup> grpMap;
 
         Locale locale;
 
@@ -905,11 +903,11 @@ public class MTIReloadableMessageSource implements DisposableBean {
             this.grpMap = new HashMap<>();
         }
 
-        public Map<String, MTIReloadableMessageSource.CachingMsgGroup> getGrpMap() {
+        public Map<String, MTIMessageSource.CachingMsgGroup> getGrpMap() {
             return this.grpMap;
         }
 
-        public void setGrpMap(Map<String, MTIReloadableMessageSource.CachingMsgGroup> param1Map) {
+        public void setGrpMap(Map<String, MTIMessageSource.CachingMsgGroup> param1Map) {
             this.grpMap = param1Map;
         }
 
@@ -922,11 +920,11 @@ public class MTIReloadableMessageSource implements DisposableBean {
         }
 
         public void putCachingMsgGroupMap(String param1String,
-                MTIReloadableMessageSource.CachingMsgGroup param1CachingMsgGroup) {
+                MTIMessageSource.CachingMsgGroup param1CachingMsgGroup) {
             this.grpMap.put(param1String, param1CachingMsgGroup);
         }
 
-        public MTIReloadableMessageSource.CachingMsgGroup getCachingMsgGroupMap(String param1String) {
+        public MTIMessageSource.CachingMsgGroup getCachingMsgGroupMap(String param1String) {
             return this.grpMap.get(param1String);
         }
     }

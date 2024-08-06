@@ -46,8 +46,6 @@ public class TelegramUtil {
             case null:
                 d = ((Float) paramObject).doubleValue();
                 break;
-            default:
-                break;
         }
         return numberFormat.format(d);
     }

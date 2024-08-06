@@ -1,7 +1,9 @@
 package mti.com.telegram.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import mti.com.telegram.model.FieldType;
 import mti.com.telegram.model.Kind;
 import mti.com.telegram.model.NumberType;
@@ -11,6 +13,8 @@ import mti.com.telegram.model.annotation.FIELD;
 
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TelegramHeader {
     @FIELD(kind = Kind.HEADER, length = 8, type = FieldType.NUMBER, trim = TrimType.LTRIM)
     @DATATYPE(type = NumberType.INT, decimal = 0)
